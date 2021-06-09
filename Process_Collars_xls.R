@@ -95,8 +95,8 @@ xlsdat <- xlsdat %>%
 xlsdat$CollarMake <- 'ATS'
 
 # check to make sure all the proper headers are included/removed
-names(existing[, !(names(existing) %in% names(xlsdat))])
-names(xlsdat[, !(names(xlsdat) %in% names(existing))])
+# names(existing[, !(names(existing) %in% names(xlsdat))])
+# names(xlsdat[, !(names(xlsdat) %in% names(existing))])
 
 
 
