@@ -15,6 +15,14 @@ con <- dbConnect(
   port = "1433"
 )
 
-
+# con<-dbConnect(
+#                odbc::odbc(), 
+#                driver = "SQL Server", 
+#                dsn="WildlifeReporting", 
+#                uid = "ShinyUserInternal", 
+#                pwd="hurt seven sat pupil",
+#                server = "164.165.105.241",
+#                port = "1433"
+#                )
 
 
