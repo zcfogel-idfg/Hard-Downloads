@@ -6,14 +6,14 @@
 #### List of Existing Hard Downloads
 
 setwd("K:/Wildlife/Fogel/Collar Data Processing")
-source('Collar_Packages.R')
+source('Hard-Downloads/Collar_Packages.R')
 # run script to access server
-source("Server_Access.R")
+source("Hard-Downloads/Server_Access.R")
 
 # create table of animal_ID and collar serial no
 #   con is from Server_Access.R
  records <- dbGetQuery(con, 'SELECT Animal_ID, Collar_Serial_No
-                       FROM Collars_Hard_Downloads2')
+                       FROM Collars_Hard_Downloads')
 
 #records <- combined
 
