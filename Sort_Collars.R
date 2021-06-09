@@ -52,7 +52,10 @@ txts[txts$firstrow == '      No CollarID   UTC Date     UTC Time   LMT Date     
      ]$type <- 4
 txts[txts$firstrow == '      No CollarID   UTC Date     UTC Time   LMT Date     LMT Time       Origin  SCTS Date    SCTS Time    ECEF X    ECEF Y    ECEF Z     Latitude    Longitude   Height  DOP       FixType 3D Error  Sats Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N                Mort. Status Activity  Main Beacon  Temp              Easting             Northing AnimalID  GroupID',
      ]$type <- 5
-txts[txts$firstrow == '   No   GMT Date GMT Time   LMT Date LMT Time    ECEF X    ECEF Y    ECEF Z     Latitude    Longitude   Height  DOP   Nav Validated Sats Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N  Main  Bkup Temp   Remarks',
+txts[txts$firstrow ==   '   No   GMT Date GMT Time   LMT Date LMT Time    ECEF X    ECEF Y    ECEF Z     Latitude    Longitude   Height  DOP   Nav Validated Sats Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N  Main  Bkup Temp   Remarks' |
+       txts$firstrow == 'No   GMT Date GMT Time   LMT Date LMT Time    ECEF X    ECEF Y    ECEF Z     Latitude    Longitude   Height  DOP   Nav Validated Sats Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N  Main  Bkup Temp   Remarks' |
+       txts$firstrow == ' No   GMT Date GMT Time   LMT Date LMT Time    ECEF X    ECEF Y    ECEF Z     Latitude    Longitude   Height  DOP   Nav Validated Sats Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N  Main  Bkup Temp   Remarks' |
+       txts$firstrow == '  No   GMT Date GMT Time   LMT Date LMT Time    ECEF X    ECEF Y    ECEF Z     Latitude    Longitude   Height  DOP   Nav Validated Sats Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N Sat C/N  Main  Bkup Temp   Remarks',
      ]$type <- 6
 # header rows are different but data are the same
 txts[txts$firstrow == 'CollarSerialNumber,Year,Month,Day,Hour,Minute,Status,Activity,Temperature,BlockNumber,Latitude,Longitude,HDOP,NumSats,FixTime,2D/3D' |
@@ -62,8 +65,13 @@ txts[txts$firstrow == 'No\tCollarID\tLMT_Date\tLMT_Time\tOrigin\tSCTS_Date\tSCTS
      ]$type <- 8
 txts[txts$firstrow == 'No\tCollarID\tUTC Date\tUTC Time\tLMT Date\tLMT Time\tOrigin\tSCTS Date\tSCTS Time\tECEF X\tECEF Y\tECEF Z\tLatitude\tLongitude\tHeight\tDOP\t\tFixType\t3D Error\tSats\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tMort. Status\tActivity\tMain B\teacon\tTemp\tEasting\tNorthing',
      ]$type <- 9
-txts[txts$firstrow == 'No\tCollarID\tUTC Date\tUTC Time\tLMT Date\tLMT Time\tOrigin\tSCTS Date\tSCTS Time\tECEF X\tECEF Y\tECEF Z\tLatitude\tLongitude\tHeight\tDOP\tFix\tType\t3D Error\tSats\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tMort. Status\tActivity\tMain\tBeacon\tTemp\tEasting\tNorthing\tAnimalID\tGroupID',
+txts[txts$firstrow == 'No\tCollarID\tUTC Date\tUTC Time\tLMT Date\tLMT Time\tOrigin\tSCTS Date\tSCTS Time\tECEF X\tECEF Y\tECEF Z\tLatitude\tLongitude\tHeight\tDOP\tFix\tType\t3D Error\tSats\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tMort. Status\tActivity\tMain\tBeacon\tTemp\tEasting\tNorthing\tAnimalID\tGroupID'|
+     txts$firstrow == 'No\tCollarID\tUTC Date\tUTC Time\tLMT Date\tLMT Time\tOrigin\tSCTS Date\tSCTS Time\tECEF X\tECEF Y\tECEF Z\tLatitude\tLongitude\tHeight\tDOP\tFixType\t3D Error\tSats\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tMort. Status\tActivity\tMain\tBeacon\tTemp\tEasting\tNorthing\tAnimalID\tGroupID'|
+     txts$firstrow == 'No\tCollarID\tUTC Date\tUTC Time\tLMT Date\tLMT Time\tOrigin\tSCTS Date\tSCTS Time\tECEF X\tECEF Y\tECEF Z\tLatitude\tLongitude\tHeight\tDOP\t\tFixType\t3D Error\tSats\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tSat\tC/N\tMort. Status\tActivity\tMain\tBeacon\tTemp\tEasting\tNorthing\tAnimalID\tGroupID',
      ]$type <- 10
+txts[txts$firstrow == 'CollarSerialNumber,Year,Julianday,Hour,Minute,Activity,Temperature,Latitude,Longitude,HDOP,NumSats,FixTime,2D/3D,Date',
+     ]$type <- 11 
+
 
 
 ## write txts to csv so you can load it later on
