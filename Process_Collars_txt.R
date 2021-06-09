@@ -782,6 +782,94 @@ newdat10 <- newdat10 %>%
   select(-c('3D Error', 'AnimalID', 'GroupID', 'No', '3D Error', 'CollarID'))
 
 
+####-------------------------------------------------
+#### Type 10 (Vectronic, tab separated)
+
+filenames11 <- txts[txts$type == 11, 3]
+
+newdat11 <- 
+  do.call(rbind, lapply(filenames11, function(x) {
+    dat11 <- read.table(x, sep = ',', skip = 1, fill = T)
+    dat11$fileName <- tools::file_path_sans_ext(basename(x))
+    dat11
+  }))
+
+
+newdat11$SerialNo <- str_split_fixed(newdat11$fileName, '_', n=2)[,1]
+newdat11$ET <- str_split_fixed(newdat11$fileName,'_', n=2)[,2]
+newdat11$Animal_ID <- gsub('ET', '', newdat11$ET)
+
+names(newdat11) <- c('CollarSerialNumber', 'Year', 'JulianDate', 'Hour', 'Minute', 'Activity',
+                     'Temperature_C', 'Latitude', 'Longitude', 'DOP',
+                     'Satsused', 'Duration_sec', '2D3D', 'LMT_Date', 'fileName', 'Collar_Serial_No', 'ET',
+                     'Animal_ID')
+
+# # convert julian date to mdy
+# # need to set origin as january 1 of that year (all these data were from 2019, 2020 and 2021)
+# newdat11$Origin <- NA
+# if (sum(newdat11$Year == 19) > 0) newdat11[newdat11$Year == 19,]$Origin <- '2019-01-01'
+# if (sum(newdat11$Year == 20) > 0) newdat11[newdat11$Year == 20,]$Origin <- '2020-01-01'
+# if (sum(newdat11$Year == 21) > 0) newdat11[newdat11$Year == 21,]$Origin <- '2021-01-01'
+
+# for some reason this function shifts dates by 1 (ie JulDate 20 becomes January 21)
+#   so need to subtract 1 from Julian date to convert
+newdat11$LMT_Date <- ymd(newdat11$LMT_Date)
+
+# remove errors 
+newdat11 <- newdat11[!is.na(newdat11$LMT_Date),]
+
+## determine time zone
+#   this runs a code to look at all of the ATS collars (only from 2020 and 2021) and determines the collar's
+source('K:/Wildlife/Fogel/Collar Data Processing/ATS Time Zones/ATS_Time_Zones.R')
+# MST contains collars in MST
+# PST contains collars in PST
+
+# initialize time zone as Error
+newdat11$tz <- 'Error'
+
+# assign time zone by looking in the MST20 etc vectors for each serial number
+newdat11[newdat11$Collar_Serial_No %in% MST,]$tz <- 'MST'
+newdat11[newdat11$Collar_Serial_No %in% PST,]$tz <- 'PST'
+#newdat11[newdat11$Collar_Serial_No %in% CST,]$tz <- 'CST' # none are in CST
+
+## put all ones with missing tz into one dataframe
+newdat11MISSING.TZ <- newdat11[newdat11$tz == 'Error',]
+# split remaining data into different dfs, one for PST one for MST
+newdat11MST <- newdat11[newdat11$tz == 'MST',]
+newdat11PST <- newdat11[newdat11$tz == 'PST',]
+
+# combine Date, hour, and minute into DateTime object
+newdat11MST$LMT <- ymd_hm(paste(newdat11MST$LMT_Date, newdat11MST$Hour, newdat11MST$Minute))
+newdat11PST$LMT <- ymd_hm(paste(newdat11PST$LMT_Date, newdat11PST$Hour, newdat11PST$Minute))
+
+# MST
+newdat11MST$LMT <- force_tz(newdat11MST$LMT, tz = 'MST')
+# PST -- it wouldn't recognize PST for me for some reason
+newdat11PST$LMT <- force_tz(newdat11PST$LMT, tz = 'America/Los_Angeles')
+
+## convert LMT to GMT 
+newdat11MST$GMT <- as.character(with_tz(newdat11MST$LMT, tz = 'GMT'))
+newdat11PST$GMT <- as.character(with_tz(newdat11PST$LMT, tz = 'GMT'))
+
+# combine back into one dataframe
+newdat11 <- rbind(newdat11MST, newdat11PST)
+
+# convert LMT to character
+newdat11$LMT <- as.character(newdat11$LMT)
+
+# extract date and time from datetime (LMT_Date already exists)
+newdat11$LMT_Time <- str_split_fixed(newdat11$LMT, ' ', 2)[,2]
+newdat11$GMT_Date <- str_split_fixed(newdat11$GMT, ' ', 2)[,1]
+newdat11$GMT_Time <- str_split_fixed(newdat11$GMT, ' ', 2)[,2]
+
+# rename and clean columns 
+newdat11 <- newdat11 %>%
+  dplyr::rename(LAT = `Latitude`,
+                LONG = `Longitude`) %>%
+  select(-c('CollarSerialNumber', 'Year', 'JulianDate', 'Hour', 'Minute', '2D3D', 'tz'))
+
+
+
 
 ####-------------------------------------------------------------
 #### Combine all txt files into single data frame
