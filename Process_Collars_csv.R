@@ -175,94 +175,94 @@ csvdat2$CollarMake <- 'Vectronic'
 ####----------------------------------------------------------------------
 #### Type 3 (Vectronic)
 
-# csvnames3 <- list.files('csv3')
-# csvnames3 <- paste0('csv3/', csvnames3) # add folder name so the next function can read them in
-# 
-# csvdat3 <- csvnames3 %>%
-#   set_names() %>% 
-#   map_df(read_csv, skip = 1, col_names = F, col_types = cols(.default = 'c'),
-#          .id = 'fileName') %>%
-#   dplyr::rename(No = X1, 
-#                 CollarID = X2, 
-#                 LMT_Date = X3, 
-#                 LMT_Time = X4,
-#                 Origin = X5,
-#                 SCTS_Date = X6, 
-#                 SCTS_Time = X7, 
-#                 `ECEF_X [m]`  = X8, 
-#                 `CEF_Y [m]` = X9, 
-#                 `ECEF_Z [m]` = X10, 
-#                 `Latitude [°]` = X11, 
-#                 `Longitude [°]` = X12, 
-#                 `Height [m]` = X13,	
-#                 DOP = X14, 
-#                 FixType = X15, 
-#                 `3D_Error [m]` = X16, 
-#                 Sats = X17,	
-#                 `Sat No1` = X18,	
-#                 `C/N db1` = X19,	
-#                 `Sat No2` = X20,	
-#                 `C/N db2` = X21,	
-#                 `Sat No3` = X22,	
-#                 `C/N db3` = X23,	
-#                 `Sat No4` = X24,	
-#                 `C/N db4` = X25, 
-#                 `Sat No5` = X26, 
-#                 `C/N db5` = X27, 
-#                 `Sat No6` = X28, 
-#                 `C/N db6` = X29, 
-#                 `Sat No7` = X30, 
-#                 `C/N db7` = X31, 
-#                 `Sat No8` = X32, 
-#                 `C/N db8` = X33,	
-#                 `Sat No9` = X34,	
-#                 `C/N db9` = X35,	
-#                 `Sat No10` = X36,	
-#                 `C/N db10` = X37,	
-#                 `Sat No11` = X38,	
-#                 `C/N db11` = X39,	
-#                 `Sat No12` = X40,	
-#                 `C/N db12` = X41,	
-#                 `Mort. Status` = X42, 
-#                 Activity = X43, 
-#                 `Main [V]` = X44, 
-#                 `Beacon [V]` = X45, 
-#                 `Temp [°C]` = X46,
-#                 Easting = X47, 
-#                 Northing = X48,
-#                 AnimalID = X49,
-#                 GroupID = X50)
-# 
-# csvdat3$fileName <- tools::file_path_sans_ext(basename(csvdat3$fileName))
-# 
-# # split fileName into collar serial and animal ID
-# csvdat3$SerialNo <- str_split_fixed(csvdat3$fileName, '_', n=2)[,1] # extract SerialNo from fileName
-# csvdat3$ET <- str_split_fixed(csvdat3$fileName, '_', n=2)[,2] # extract ET# from fileName
-# csvdat3$Animal_ID <- gsub('ET', '', csvdat3$ET) # remove 'ET' from ET#
-# 
-# # check tz
-# csvdat3$DateTime_LMT <- as.character(mdy_hms(paste(csvdat3$LMT_Date, csvdat3$LMT_Time), tz = 'GMT'))
-# 
-# # put dates in y-m-d format with lubridate
-# csvdat3$LMT_Date <- as.character(mdy(csvdat3$LMT_Date))
-# 
-# # rename files to match downloaded files (X indicates that column isn't present in downloaded files)
-# names(csvdat3) <- c('fileName', 'XNo', 'XCollarID', 'Origin', 'LMT_Date',
-#                     'LMT_Time', 'SCTS_Date', 'SCTS_Time', 'ECEF_X', 'ECEF_Y', 
-#                     'ECEF_Z', 'LAT', 'LONG', 'ALT', 'DOP', 'FixStatus', 'X3D_Error', 
-#                     'Satsused', 'SatNo1', 'CNdb1', 'SatNo2', 'CNdb2', 'SatNo3', 
-#                     'CNdb3', 'SatNo4', 'CNdb4', 'SatNo5', 'CNdb5', 'SatNo6', 'CNdb6', 
-#                     'SatNo7', 'CNdb7', 'SatNo8', 'CNdb8', 'SatNo9', 'CNdb9',              
-#                     'SatNo10', 'CNdb10', 'SatNo11', 'CNdb11', 'SatNo12', 'CNdb12', 
-#                     'MortStatus', 'Activity', 'Main_V', 'Beacon_v', 'Temperature_C', 'Easting', 
-#                     'Northing', 'XAnimalID', 'XGroupID', 'Collar_Serial_No', 'ET', 
-#                     'Animal_ID','LMT')
-# 
-# # remove unnecessary columns
-# csvdat3 <- csvdat3 %>%
-#   select(-c('XNo', 'XCollarID', 'X3D_Error', 'XAnimalID', 'XGroupID'))
-# 
-# csvdat3$CollarMake <- 'Vectronic'
+csvnames3 <- list.files('csv3')
+csvnames3 <- paste0('csv3/', csvnames3) # add folder name so the next function can read them in
+
+csvdat3 <- csvnames3 %>%
+  set_names() %>%
+  map_df(read_csv, skip = 1, col_names = F, col_types = cols(.default = 'c'),
+         .id = 'fileName') %>%
+  dplyr::rename(No = X1,
+                CollarID = X2,
+                LMT_Date = X3,
+                LMT_Time = X4,
+                Origin = X5,
+                SCTS_Date = X6,
+                SCTS_Time = X7,
+                `ECEF_X [m]`  = X8,
+                `ECEF_Y [m]` = X9,
+                `ECEF_Z [m]` = X10,
+                `Latitude [°]` = X11,
+                `Longitude [°]` = X12,
+                `Height [m]` = X13,
+                DOP = X14,
+                FixType = X15,
+                `3D_Error [m]` = X16,
+                Sats = X17,
+                `Sat No1` = X18,
+                `C/N db1` = X19,
+                `Sat No2` = X20,
+                `C/N db2` = X21,
+                `Sat No3` = X22,
+                `C/N db3` = X23,
+                `Sat No4` = X24,
+                `C/N db4` = X25,
+                `Sat No5` = X26,
+                `C/N db5` = X27,
+                `Sat No6` = X28,
+                `C/N db6` = X29,
+                `Sat No7` = X30,
+                `C/N db7` = X31,
+                `Sat No8` = X32,
+                `C/N db8` = X33,
+                `Sat No9` = X34,
+                `C/N db9` = X35,
+                `Sat No10` = X36,
+                `C/N db10` = X37,
+                `Sat No11` = X38,
+                `C/N db11` = X39,
+                `Sat No12` = X40,
+                `C/N db12` = X41,
+                `Mort. Status` = X42,
+                Activity = X43,
+                `Main [V]` = X44,
+                `Beacon [V]` = X45,
+                `Temp [°C]` = X46,
+                Easting = X47,
+                Northing = X48,
+                AnimalID = X49,
+                GroupID = X50)
+
+csvdat3$fileName <- tools::file_path_sans_ext(basename(csvdat3$fileName))
+
+# split fileName into collar serial and animal ID
+csvdat3$SerialNo <- str_split_fixed(csvdat3$fileName, '_', n=2)[,1] # extract SerialNo from fileName
+csvdat3$ET <- str_split_fixed(csvdat3$fileName, '_', n=2)[,2] # extract ET# from fileName
+csvdat3$Animal_ID <- gsub('ET', '', csvdat3$ET) # remove 'ET' from ET#
+
+# check tz
+csvdat3$DateTime_LMT <- as.character(mdy_hms(paste(csvdat3$LMT_Date, csvdat3$LMT_Time), tz = 'GMT'))
+
+# put dates in y-m-d format with lubridate
+csvdat3$LMT_Date <- as.character(mdy(csvdat3$LMT_Date))
+
+# rename files to match downloaded files (X indicates that column isn't present in downloaded files)
+names(csvdat3) <- c('fileName', 'XNo', 'XCollarID', 'Origin', 'LMT_Date',
+                    'LMT_Time', 'SCTS_Date', 'SCTS_Time', 'ECEF_X', 'ECEF_Y',
+                    'ECEF_Z', 'LAT', 'LONG', 'ALT', 'DOP', 'FixStatus', 'X3D_Error',
+                    'Satsused', 'SatNo1', 'CNdb1', 'SatNo2', 'CNdb2', 'SatNo3',
+                    'CNdb3', 'SatNo4', 'CNdb4', 'SatNo5', 'CNdb5', 'SatNo6', 'CNdb6',
+                    'SatNo7', 'CNdb7', 'SatNo8', 'CNdb8', 'SatNo9', 'CNdb9',
+                    'SatNo10', 'CNdb10', 'SatNo11', 'CNdb11', 'SatNo12', 'CNdb12',
+                    'MortStatus', 'Activity', 'Main_V', 'Beacon_v', 'Temperature_C', 'Easting',
+                    'Northing', 'XAnimalID', 'XGroupID', 'Collar_Serial_No', 'ET',
+                    'Animal_ID','LMT')
+
+# remove unnecessary columns
+csvdat3 <- csvdat3 %>%
+  select(-c('XNo', 'XCollarID', 'X3D_Error', 'XAnimalID', 'XGroupID'))
+
+csvdat3$CollarMake <- 'Vectronic'
 
 
 ####------------------------------------------------------------------
@@ -584,36 +584,36 @@ csvdat8$CollarMake <- 'Lotek'
 
 ####--------------------------------------------------------------------------
 #### Type 10 (Lotek)
-# 
-# csvnames10 <- paste0('csv10/', list.files('csv10'))
-# 
-# csvdat10 <-
-#   do.call(bind_rows, lapply(csvnames10, function(x) {
-#     dat10 <- read.csv(x, skip = 4, header = TRUE)
-#     dat10 <- separate(dat10, GMT.Time.tabLatitude.tabLongitude.tabAltitude.tabDuration.tabTemperature.tabDOP.tabSatellites.tabCause.of.Fix, 
-#                       c("GMT_Time", "Latitude", "Longitude", "Altitude", "Duration_sec", 
-#                         "Temperature", "DOP", "Satellites", "Cause"), sep = ".tab")
-#     dat10$fileName <- tools::file_path_sans_ext(basename(x))
-#     dat10
-#   }))
-# 
-# csvdat10$SerialNo <- str_split_fixed(csvdat10$fileName, '_', n=2)[,1] # extract SerialNo from fileName
-# csvdat10$ET <- str_split_fixed(csvdat10$fileName, '_', n=2)[,2] # extract ET# from fileName
-# csvdat10$Animal_ID <- gsub('ET', '', csvdat10$ET) # remove 'ET' from ET#
-# 
-# # change datetime to standard format, then back to character
-# csvdat10$DateTime_GMT <- as.character(mdy_hms(csvdat10$GMT, tz = 'GMT'))
-# 
-# # split dateTime into date and time
-# csvdat10$GMT_Date <- str_split_fixed(csvdat10$DateTime_GMT, ' ', n=2)[,1]
-# csvdat10$GMT_Time <- str_split_fixed(csvdat10$DateTime_GMT, ' ', n=2)[,2]
-# 
-# # rename files to match downloaded files (X indicates that column isn't present in downloaded files)
-# names(csvdat10) <- c('GMT_Time', 'LAT', 'LONG', 'ALT', 'Duration', 
-#                      'Temperature_C', 'DOP', 'Satsused', 'Cause_of_Fix', 'fileName', 
-#                      'Collar_Serial_No', 'ET', 'Animal_ID', 'GMT', 'GMT_Date')
-# 
-# csvdat10$CollarMake <- 'Lotek'
+
+csvnames10 <- paste0('csv10/', list.files('csv10'))
+
+csvdat10 <-
+  do.call(bind_rows, lapply(csvnames10, function(x) {
+    dat10 <- read.csv(x, skip = 4, header = TRUE)
+    dat10 <- separate(dat10, GMT.Time.tabLatitude.tabLongitude.tabAltitude.tabDuration.tabTemperature.tabDOP.tabSatellites.tabCause.of.Fix,
+                      c("GMT_Time", "Latitude", "Longitude", "Altitude", "Duration_sec",
+                        "Temperature", "DOP", "Satellites", "Cause"), sep = ".tab")
+    dat10$fileName <- tools::file_path_sans_ext(basename(x))
+    dat10
+  }))
+
+csvdat10$SerialNo <- str_split_fixed(csvdat10$fileName, '_', n=2)[,1] # extract SerialNo from fileName
+csvdat10$ET <- str_split_fixed(csvdat10$fileName, '_', n=2)[,2] # extract ET# from fileName
+csvdat10$Animal_ID <- gsub('ET', '', csvdat10$ET) # remove 'ET' from ET#
+
+# change datetime to standard format, then back to character
+csvdat10$DateTime_GMT <- as.character(mdy_hms(csvdat10$GMT, tz = 'GMT'))
+
+# split dateTime into date and time
+csvdat10$GMT_Date <- str_split_fixed(csvdat10$DateTime_GMT, ' ', n=2)[,1]
+csvdat10$GMT_Time <- str_split_fixed(csvdat10$DateTime_GMT, ' ', n=2)[,2]
+
+# rename files to match downloaded files (X indicates that column isn't present in downloaded files)
+names(csvdat10) <- c('GMT_Time', 'LAT', 'LONG', 'ALT', 'Duration',
+                     'Temperature_C', 'DOP', 'Satsused', 'Cause_of_Fix', 'fileName',
+                     'Collar_Serial_No', 'ET', 'Animal_ID', 'GMT', 'GMT_Date')
+
+csvdat10$CollarMake <- 'Lotek'
 
 
 ####------------------------------------------------------------------------
@@ -688,8 +688,8 @@ csvdat12$CollarMake <- 'Telonics'
 #### Combine Dataframes
 
 ## rbind all csvs into one data frame
-all_csv <- plyr::rbind.fill(csvdat1, csvdat2, csvdat4, csvdat5, csvdat6, 
-                            csvdat7, csvdat8, csvdat12)
+all_csv <- plyr::rbind.fill(csvdat1, csvdat2, csvdat3, csvdat4, csvdat5, csvdat6, 
+                            csvdat7, csvdat8, csvdat10, csvdat12)
 
 # add MortStatus by looking for 'Mortality' in Cause_of_Fix 
 all_csv$MortStatus = ifelse(all_csv$Cause_of_Fix %in% c('Mortality'), 'Yes', 'No')
@@ -731,7 +731,11 @@ rm(csvdat1, csvdat2, csvdat3, csvdat4, csvdat5, csvdat6,
 a <- unique(all_csv$fileName)
 b <- unique(tools::file_path_sans_ext(csvs$file.ext))
 
+c <- file_path_sans_ext(basename(csvnames8))
+
 # filenames in all_csv that aren't in csvs
 a[which(!(b %in% a))]
 # filenames in csvs that aren't in all_csv
 b[which(!(a %in% b))]
+# filenames in csv8 that aren't in all_csv
+c[which(!(a %in% c))]

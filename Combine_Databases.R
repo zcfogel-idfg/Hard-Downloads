@@ -1,14 +1,21 @@
 setwd('K:/Wildlife/Fogel/Collar Data Processing')
-source('Collar_Packages.R')
+source('Hard-Downloads/Collar_Packages.R')
 
-source('Server_Access.R')
+source('Hard-Downloads/Server_Access.R')
 
-hard2 <- dbGetQuery(con, 'SELECT * 
-                   FROM Collars_Hard_Downloads2')
+
+hard <- dbGetQuery(con, 'SELECT * 
+                   FROM Collars_Hard_Downloads')
 
 new <- readRDS('RData/New_Collars.RDS') 
 
-combined <- plyr::rbind.fill(hard2, new)
+
+
+combined <- plyr::rbind.fill(hard, new) %>%
+  select(-c('CollarLocID', 'Duration'))
+
+combined$Capture_Date <- ymd(combined$Capture_Date)
+combined$Capture_Date <- as.POSIXct(combined$Capture_Date)
 
 names(combined)
 sort(names(combined))
@@ -22,12 +29,11 @@ names(hard1)[which(!(names(hard1) %in% names(new)))]
 View(combined)
 
 new <- new[which(!(new %in% dupes)),]
+saveRDS(combined, 'RData/New_Hard_Downloads.RDS')
 
-# saveRDS(combined, 'New_Hard_Downloads.RDS')
 
-
-dbAppendTable(con, 'Collars_Hard_Downloads2', new)
-dbWriteTable(con, 'Collars_Hard_Downloads3', combined)
+dbAppendTable(con, 'Collars_Hard_Downloads3', combined)
+dbWriteTable(con, 'Collars_Hard_Downloads3', combined, overwrite = T)
 
 
 ##### check to see why things didn't append
